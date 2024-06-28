@@ -14,7 +14,7 @@ int main(void)
   // Print the thing
 	
 }
-
+ 
 int get_height(void) 
 {
 	int height;
