@@ -5,17 +5,18 @@
 int points[26];
 char letters[26];
 void config(void);
+bool winner(string x, string y);
 
 int main(void)
 {
     // CONGIG
     config();
-    printf("%i\n", points[25]);
-    printf("%c\n", letters[12]);
+
 
     // Get player 1 and two input
-    //string player1 = get_string("Player 1: ");
-    //string player2 = get_string("Player 2: ");
+    string player1 = get_string("Player 1: ");
+    string player2 = get_string("Player 2: ");
+    winner(player1, player2);
 }
 
 void config(void)
@@ -32,6 +33,18 @@ bool winner(string x, string y)
 {
     int word1 = strlen(x);
     int word2 = strlen(y);
-    return true;
+    int sum = 0;
+    for (int i=0; i < word1; i++)
+    {
+        for (int j = 0; j < 26; j++)
+        {
+            if (x[i] == letters[j])
+            {
+                printf("%c", x[i]); //IT WORKS
+            }
+        }
+    }
 
+
+    return true;
 }
