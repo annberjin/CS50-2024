@@ -24,7 +24,7 @@ void config(void)
     for (i=0; i<26; i++)
     {
         points[i] = i + 1;
-        letters[i] = 'a' + 1;
+        letters[i] = 'a' + i;
     }
 }
 
