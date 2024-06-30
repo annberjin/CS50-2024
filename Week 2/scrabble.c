@@ -1,50 +1,60 @@
 #include <cs50.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
-int points[26];
+int points[] = {1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};
 char letters[26];
 void config(void);
-bool winner(string x, string y);
+int get_score(string x);
 
 int main(void)
 {
     // CONGIG
     config();
 
-
-    // Get player 1 and two input
+    // Get player 1 and 2 input
     string player1 = get_string("Player 1: ");
     string player2 = get_string("Player 2: ");
-    winner(player1, player2);
+    int p1 = get_score(player1);
+    int p2 = get_score(player2);
+
+    if (p1 > p2)
+    {
+        printf("Player 1 wins!\n");
+    }
+    else if (p1 < p2)
+    {
+        printf("Player 2 wins!\n");
+    }
+    else
+    {
+        printf("Tie!\n");
+    }
 }
 
 void config(void)
 {
     int i;
-    for (i=0; i<26; i++)
+    for (i = 0; i < 26; i++)
     {
-        points[i] = i + 1;
         letters[i] = 'a' + i;
     }
 }
 
-bool winner(string x, string y)
+int get_score(string x)
 {
-    int word1 = strlen(x);
-    int word2 = strlen(y);
+    int length = strlen(x);
     int sum = 0;
-    for (int i=0; i < word1; i++)
+    for (int i = 0; i < length; i++)
     {
         for (int j = 0; j < 26; j++)
         {
-            if (x[i] == letters[j])
+            if (tolower(x[i]) == letters[j])
             {
-                printf("%c", x[i]); //IT WORKS
+                sum += points[j];
             }
         }
     }
-
-
-    return true;
+    return sum;
 }
