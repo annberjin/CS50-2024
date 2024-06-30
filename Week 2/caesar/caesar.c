@@ -31,13 +31,34 @@ int main(int argc, string argv[])
 
     // Prompt user for plaintext
     string plaintext = get_string("Plaintext: ");
+    int l = strlen(plaintext);
+    char ciphertext[l];
 
     // For each character in the plaintext:
+    for (int i = 0; i < l; i++)
+    {
+        ciphertext[i] = rotate(plaintext[i], key);
+    }
+    ciphertext[l] = '\0';
 
-    // Rotate the character if it's a letter
+    printf("ciphertext: %s\n", ciphertext);
 }
 
 char rotate(char letter, int key)
 {
-    return ' ';
+    //char new = letter + key % 26; // Something is wrong here
+    char new;
+    if isupper(letter)
+    {
+        new = (((letter - 65) + key) % 26) + 65; // 'A'
+    }
+    else if islower(letter)
+    {
+        new = (((letter - 97) + key) % 26) + 97; // 'A'
+    }
+    else
+    {
+        return letter;
+    }
+    return new;
 }
