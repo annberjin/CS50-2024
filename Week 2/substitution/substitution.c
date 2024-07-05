@@ -3,8 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
-char key[26];
-void add_key(string x);
+// AANSHKVEFXRBAUQZCLWDMIPGAA
+bool check_key(string key);
+int encrypted_index(char letter);
 
 int main(int argc, string argv[])
 {
@@ -14,24 +15,66 @@ int main(int argc, string argv[])
         return 1;
     }
 
-    if (strlen(argv[1]) < 26)
+    string key = argv[1];
+    if (check_key(key) == false)
     {
-        printf("Key must contain 26 characters.\n");
-        return 1;
+        printf("Key must contain 26 unique characters\n");
     }
-
-    add_key(argv[1]);
-    // printf("%c\n", key[2]);
 
     string plaintext = get_string("Plaintext: ");
     int L = strlen(plaintext);
     char ciphertext[L];
+
+    for (int i = 0; i < L; i++)
+    {
+        int index = encrypted_index(plaintext[i]);
+        ciphertext[i] = key[index];
+    }
+    ciphertext[L] = '\0';
+    printf("ciphertext: %s\n", ciphertext);
+    return 0;
+
 }
 
-void add_key(string x)
+bool check_key(string key)
 {
-    for (int i = 0; i < 26; i++)
+    int L = strlen(key);
+    if (L != 26)
     {
-        key[i] = toupper(x[i]);
+        return false;
     }
+
+    for (int i = 0; i < L; i++)
+    {
+        key[i] = toupper(key[i]);
+
+        if (!isalpha(key[i]))
+        {
+            return false;
+        }
+
+        for (int j = i + 1; j < L; j++)
+        {
+            // printf("I: %c  J: %c\n", key[i], key[j]);
+            if (key[i] == key[j])
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+
+}
+
+int encrypted_index(char letter)
+{
+    if (isupper(letter))
+    {
+        letter -= 65;
+    }
+    else if (islower(letter))
+    {
+        letter -= 97;
+    }
+    return letter;
 }
