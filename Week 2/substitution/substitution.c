@@ -19,21 +19,32 @@ int main(int argc, string argv[])
     if (check_key(key) == false)
     {
         printf("Key must contain 26 unique characters\n");
+        return 1;
     }
 
-    string plaintext = get_string("Plaintext: ");
+    string plaintext = get_string("plaintext: ");
     int L = strlen(plaintext);
     char ciphertext[L];
 
     for (int i = 0; i < L; i++)
     {
         int index = encrypted_index(plaintext[i]);
-        ciphertext[i] = key[index];
+        if (islower(plaintext[i]))
+        {
+            ciphertext[i] = key[index] + 32;
+        }
+        else if (isupper(plaintext[i]))
+        {
+            ciphertext[i] = key[index];
+        }
+        else
+        {
+            ciphertext[i] = plaintext[i];
+        }
     }
     ciphertext[L] = '\0';
     printf("ciphertext: %s\n", ciphertext);
     return 0;
-
 }
 
 bool check_key(string key)
@@ -47,7 +58,10 @@ bool check_key(string key)
     for (int i = 0; i < L; i++)
     {
         key[i] = toupper(key[i]);
+    }
 
+    for (int i = 0; i < L; i++)
+    {
         if (!isalpha(key[i]))
         {
             return false;
@@ -55,7 +69,6 @@ bool check_key(string key)
 
         for (int j = i + 1; j < L; j++)
         {
-            // printf("I: %c  J: %c\n", key[i], key[j]);
             if (key[i] == key[j])
             {
                 return false;
@@ -63,7 +76,6 @@ bool check_key(string key)
         }
     }
     return true;
-
 }
 
 int encrypted_index(char letter)
