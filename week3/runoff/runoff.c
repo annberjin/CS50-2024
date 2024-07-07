@@ -144,6 +144,20 @@ bool vote(int voter, int rank, string name)
 void tabulate(void)
 {
     // TODO
+    for (int i = 0; i < voter_count; i++) //MESSED up should do voter count
+    {
+        for (int j = 0; j < candidate_count; j++)
+            {
+                if (!candidates[j].eliminated)
+                {
+                    if (preferences[i][0] == j)
+                    {
+                        candidates[j].votes += 1;
+                        printf("%s %i \n", candidates[j].name, candidates[j].votes); //BROKEN only adds 1 vote
+                    }
+                }
+            }
+    }
     return;
 }
 
@@ -151,7 +165,7 @@ void tabulate(void)
 bool print_winner(void)
 {
     // TODO
-    return false;
+    return true; //CHANGE BACK TO FALSE
 }
 
 // Return the minimum number of votes any remaining candidate has
