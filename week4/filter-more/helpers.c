@@ -25,6 +25,17 @@ void grayscale(int height, int width, RGBTRIPLE image[height][width])
 // Reflect image horizontally
 void reflect(int height, int width, RGBTRIPLE image[height][width])
 {
+    for (int i = 0; i < height; i++)
+    {
+        int counter = width - 1;
+        for (int j = 0; j < width / 2; j++)
+        {
+            RGBTRIPLE temp = image[i][j]; // Make a copy 
+            image[i][j] = image[i][counter];
+            image[i][counter] = temp;
+            counter -= 1;
+        }
+    }
     return;
 }
 
