@@ -11,28 +11,27 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    FILE *forensic_image = fopen(argv[1], "r");
+    FILE *input_file = fopen(argv[1], "r");
 
-    // Check if file is opened properly
-    if (forensic_image == NULL)
+    // If file can't be opened for reading
+    if (input_file == NULL)
     {
         return 1;
     }
 
+    FILE *output_file = NULL;
     uint8_t buffer[512];
+    char *filename = malloc(8 * sizeof(char));
+    const int blocksize = 512;
     int counter = 0;
 
-    // Memory for name format
-    char *filename = malloc(8);
-    FILE *output_file = NULL;
-
-    while (fread(buffer, 1, 512, forensic_image) == 512)
+    while (fread(buffer, sizeof(char), blocksize, input_file))
     {
-
-        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff &&
-            (buffer[3] & 0xf0) == 0xe0)
+        // Bitwise arithmetic for the fourth byte -> 1111 0000 + 1110 0000 = 1110 0000
+        if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
-            // Closes file if already exist
+
+            // Closes files that are already written
             if (counter > 0)
             {
                 fclose(output_file);
@@ -44,15 +43,15 @@ int main(int argc, char *argv[])
             counter++;
         }
 
-        // Writes to file if exists
+        // Writes to exisiting files
         if (output_file != NULL)
         {
-            fwrite(buffer, 1, 512, output_file);
+            fwrite(buffer, sizeof(char), blocksize, output_file);
         }
     }
 
     free(filename);
-    fclose(forensic_image);
+    fclose(input_file);
     fclose(output_file);
     return 0;
 }
