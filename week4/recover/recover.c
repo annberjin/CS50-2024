@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
         // Bitwise arithmetic for the fourth byte -> 1111 0000 + 1110 0000 = 1110 0000
         if (buffer[0] == 0xff && buffer[1] == 0xd8 && buffer[2] == 0xff && (buffer[3] & 0xf0) == 0xe0)
         {
-
             // Closes files that are already written
             if (counter > 0)
             {
