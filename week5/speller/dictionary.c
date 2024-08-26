@@ -1,8 +1,8 @@
 // Implements a dictionary's functionality
 
 #include <ctype.h>
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
@@ -64,7 +64,7 @@ bool load(const char *dictionary)
 
     // Read each word in the file and add each word to hash table
 
-     // Max characters for a word
+    // Max characters for a word
     char word[LENGTH + 1];
 
     while (fscanf(dict_file, "%s", word) != EOF)
@@ -82,7 +82,7 @@ bool load(const char *dictionary)
         // Returns a hash value
         unsigned int hash_value = hash(word);
 
-        // Insert the new node in front of table
+        // Prepends the new node into the table
         n->next = table[hash_value];
         table[hash_value] = n;
         word_count++;
