@@ -19,6 +19,12 @@ def print_pyramid(height):
     for i in range(height):
         print((" " * (height-i-1)) + ("#"*(i+1)))
 
+        """
+        The print function for mario-more
+        print((" " * (height-i-1)) + ("#"*(i+1)) + "  " + ("#"*(i+1)))
+    
+        """
+        
 
 if __name__ == "__main__":
     main()
