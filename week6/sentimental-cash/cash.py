@@ -1,5 +1,3 @@
-from decimal import Decimal
-
 def main():
     change = get_float("Change: ")
     print(calculate(change))
@@ -8,10 +6,15 @@ def main():
 def get_float(prompt):
     while True:
         try:
-            n = Decimal(input(prompt))
+            n = float(input(prompt))
+
+            if n < 0:
+                raise ValueError
             return n
+
         except ValueError:
             pass
+
 
 def calculate(change):
     change *= 100
